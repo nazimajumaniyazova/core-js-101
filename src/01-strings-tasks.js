@@ -203,16 +203,10 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-  let result = '';
-  for (let i = 0; i < height; i += 1) {
-    for (let j = 0; j < width; j += 1) {
-      result += '-';
-      if (j === width - 1) {
-        result += '\n+';
-      }
-    }
-  }
-  return result;
+  const tl = `┌${'─'.repeat(width - 2)}┐\n`;
+  const ml = `│${' '.repeat(width - 2)}│\n`;
+  const dl = `└${'─'.repeat(width - 2)}┘\n`;
+  return tl + ml.repeat(height - 2) + dl;
 }
 
 
@@ -229,29 +223,12 @@ function getRectangleString(width, height) {
  *   'Why did the chicken cross the road?' => 'Jul qvq gur puvpxra pebff gur ebnq?'
  *   'Gb trg gb gur bgure fvqr!' => 'To get to the other side!'
  *   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
- *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
+ *   'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
 function encodeToRot13(str) {
-  const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y'];
-
-  let result = '';
-  for (let i = 0; i < str.length; i += 1) {
-    if (alphabet.indexOf(str[i].toLowerCase()) + 13 < alphabet.length) {
-      if (/[A-Z]/.test(str[i])) {
-        result += alphabet[alphabet.indexOf(str[i].toLowerCase()) + 13].toUpperCase();
-      } else {
-        result += alphabet[alphabet.indexOf(str[i]) + 13];
-      }
-    } else if (alphabet.indexOf(str[i].toLowerCase()) + 13 >= alphabet.length) {
-      if (/[A-Z]/.test(str[i])) {
-        result += alphabet[alphabet.indexOf(str[i].toLowerCase()) + 13 - 26].toUpperCase();
-      } else {
-        result += alphabet[alphabet.indexOf(str[i]) + 13 - 26];
-      }
-    }
-  }
-  return result;
+  const abc = 'abcdefghijklmnopqrstuvwxyzabcdefghijklmABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLM';
+  return str.replace(/[a-z]/gi, (s) => abc[abc.indexOf(s) + 13]);
 }
 
 /**
@@ -299,8 +276,9 @@ function isString(value) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const desk = ['A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣', 'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦', 'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥', 'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠'];
+  return desk.indexOf(value);
 }
 
 
