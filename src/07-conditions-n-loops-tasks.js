@@ -539,8 +539,6 @@ function evaluateTicTacToePosition(position) {
         countX += 1;
       }
       if (position[i][j] === '0') {
-        console.log(i, j);
-        console.log(position[i][j]);
         countO += 1;
       }
       if (i === j) {
