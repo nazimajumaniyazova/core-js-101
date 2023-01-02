@@ -506,8 +506,66 @@ function getMatrixProduct(a, b) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  if (position[0][2] === 'X' && position[1][1] === 'X' && position[2][0] === 'X') {
+    return 'X';
+  }
+  if (position[0][2] === '0' && position[1][1] === '0' && position[2][0] === '0') {
+    return '0';
+  }
+  let countCrossX = 0;
+  let countCrossO = 0;
+  for (let i = 0; i < 3; i += 1) {
+    let countX = 0;
+    let countO = 0;
+    for (let j = 0; j < 3; j += 1) {
+      let countColX = 0;
+      let countColO = 0;
+      for (let k = 0; k < 3; k += 1) {
+        if (position[k][j] === 'X') {
+          countColX += 1;
+        }
+        if (position[k][j] === '0') {
+          countColO += 1;
+        }
+      }
+      if (countColX >= 3) {
+        return 'X';
+      }
+      if (countColO >= 3) {
+        return '0';
+      }
+      if (position[i][j] === 'X') {
+        countX += 1;
+      }
+      if (position[i][j] === '0') {
+        console.log(i, j);
+        console.log(position[i][j]);
+        countO += 1;
+      }
+      if (i === j) {
+        if (position[i][j] === 'X') {
+          countCrossX += 1;
+        }
+        if (position[i][j] === '0') {
+          countCrossO += 1;
+        }
+      }
+    }
+    if (countX >= 3) {
+      return 'X';
+    }
+    if (countO >= 3) {
+      return '0';
+    }
+  }
+  if (countCrossO >= 3) {
+    return '0';
+  }
+  if (countCrossX >= 3) {
+    return 'X';
+  }
+  return undefined;
 }
 
 
